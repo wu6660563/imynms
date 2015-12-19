@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<server>
+    <port>9999</port>
+    <name>rmiClient</name>
+    <serviceClass>com.afunms.rmi.service.RMIClientImpl</serviceClass>
+    <actions>
+        <action>
+            <name>alarm</name>
+            <class>com.mynms.rmi.server.AlarmInfoRMIServerService</class>
+        </action>
+        <action>
+            <name>net</name>
+            <class>com.mynms.rmi.server.PerformanceNetInfoRMIServerService</class>
+        </action>
+        <action>
+            <name>host</name>
+            <class>com.mynms.rmi.server.PerformanceHostInfoRMIServerService</class>
+        </action>
+        <action>
+            <name>database</name>
+            <class>com.mynms.rmi.server.PerformanceDBInfoRMIServerService</class>
+        </action>
+        <action>
+            <name>env</name>
+            <class>com.mynms.rmi.server.PerformanceEnvInfoRMIServerService</class>
+        </action>
+        <action>
+            <name>user</name>
+            <class>com.mynms.rmi.server.UserRMIServerService</class>
+        </action>
+        <action>
+            <name>topologyMap</name>
+            <class>com.mynms.rmi.server.TopologyMapRMIServerService</class>
+        </action>
+    </actions>
+</server>

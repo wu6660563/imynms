@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Object xmlns="http://www.spicefactory.org/parsley" 
+		   xmlns:mx="http://www.adobe.com/2006/mxml" 
+		   xmlns:cg="com.adobe.cairngorm.module.*">
+	<mx:Script>
+		<![CDATA[
+			import com.surekam.cairngorm3.moduleTest.example.api.BroadCastMessage;
+			import com.surekam.cairngorm3.moduleTest.example.api.ClearLogMessage;
+			import com.surekam.cairngorm3.moduleTest.example.api.PingMessage;
+			import com.surekam.cairngorm3.moduleTest.example.api.PongMessage;
+			
+			import org.spicefactory.lib.reflect.ClassInfo;
+		]]>
+	</mx:Script>
+	
+	
+			<cg:ParsleyModuleDescriptor objectId="moduleA"
+										 url="com/surekam/cairngorm3/moduleTest/example/moduleA/moduleA.swf"
+										 domain="{ClassInfo.currentDomain}" />
+	      
+	        <cg:ParsleyModuleDescriptor objectId="moduleC"  url="com/surekam/cairngorm3/moduleTest/example/moduleC/moduleC.swf"
+										domain="{ClassInfo.currentDomain}" />
+	
+
+	        <cg:LazyModuleLoadPolicyTag objectId="lazyLoadPolicy" type="{ PingMessage }"  />
+	        <cg:ModuleMessageInterceptor type="{ PingMessage }" />
+              	
+	        <cg:ModuleMessageInterceptor type="{BroadCastMessage}"  moduleRef="moduleA"  />
+	        <cg:ModuleMessageInterceptor type="{ClearLogMessage}"  />
+            <cg:ModuleMessageInterceptor type="{PongMessage}" moduleRef="moduleC" />
+			
+	    
+	
+	       
+</mx:Object>

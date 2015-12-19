@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="/login" namespace="/login" extends="struts-default">
+        <action name="login" class="loginAction" method="login">
+            <result name="index">/home/index.jsp</result>
+            <result name="home">/home/home.jsp</result>
+        </action>
+        <action name="home" class="loginAction" method="home">
+            <result name="home">/home/home.jsp</result>
+        </action>
+        <action name="top" class="loginAction" method="top">
+            <result name="top">/home/top.jsp</result>
+        </action>
+    </package>
+</struts>
+ 

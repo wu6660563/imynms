@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<actionScriptProperties mainApplicationPath="cairngorm3ModuleTest.mxml" projectUUID="8ae7db3e-8506-4acf-ad78-371c8b422e67" version="6">
+  <compiler additionalCompilerArguments="-locale en_US -keep-all-type-selectors=true" autoRSLOrdering="false" copyDependentFiles="true" flexSDK="Flex 4.0" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="false" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+    <compilerSourcePath/>
+    <libraryPath defaultLinkType="0">
+      <libraryPathEntry kind="4" path="">
+        <excludedEntries>
+          <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/flex.swc" useDefaultLinkType="false"/>
+        </excludedEntries>
+      </libraryPathEntry>
+      <libraryPathEntry kind="1" linkType="1" path="libs"/>
+      <libraryPathEntry kind="3" linkType="1" path="F:/flex/产品资料/cairngorm3/cairngorm所有SWC/module-0.9.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="F:/flex/产品资料/cairngorm3/cairngorm所有SWC/parsley-flex4-2.2.2.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="F:/flex/产品资料/cairngorm3/cairngorm所有SWC/spicelib-flex-2.2.2.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/Common/"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LIB_LOCATION}/version4libs/FlexProject/"/>
+      <libraryPathEntry kind="1" linkType="1" path="${FLEXUNIT_LOCALE_LOCATION}/version4locale/"/>
+    </libraryPath>
+    <sourceAttachmentPath/>
+  </compiler>
+  <applications>
+    <application path="cairngorm3ModuleTest.mxml"/>
+  </applications>
+  <modules>
+    <module application="src/CairngormModuleLibSample.mxml" destPath="com/surekam/cairngorm3/moduleTest/example/moduleA/moduleA.swf" optimize="false" sourcePath="src/com/surekam/cairngorm3/moduleTest/example/moduleA/moduleA.mxml"/>
+    <module application="src/cairngorm3ModuleTest.mxml" destPath="com/surekam/cairngorm3/moduleTest/example/moduleC/moduleC.swf" optimize="true" sourcePath="src/com/surekam/cairngorm3/moduleTest/example/moduleC/moduleC.mxml"/>
+  </modules>
+  <buildCSSFiles/>
+</actionScriptProperties>

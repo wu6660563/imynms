@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application  xmlns:mx="http://www.adobe.com/2006/mxml" 
+				  minWidth="600" minHeight="400" xmlns:spicefactory="http://www.spicefactory.org/parsley" xmlns:cairngorm="com.adobe.cairngorm.*" xmlns:module="com.adobe.cairngorm.module.*">
+	
+	
+	
+	
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.module.ILoadPolicy;
+			import com.adobe.cairngorm.module.IModuleManager;
+			import com.surekam.cairngorm3.moduleTest.example.ModulePod;
+			import com.surekam.cairngorm3.moduleTest.example.api.BroadCastMessage;
+			import com.surekam.cairngorm3.moduleTest.example.api.ClearLogMessage;
+			import com.surekam.cairngorm3.moduleTest.example.api.PingMessage;
+			import com.surekam.cairngorm3.moduleTest.example.api.PongMessage;
+			
+			import mx.logging.LogEventLevel;
+			import mx.modules.ModuleManager;
+			[Bindable]
+			[Inject(id="moduleA")]
+			public var moduleA:IModuleManager;
+			
+			[Bindable]
+			[Inject(id="moduleC")]
+			public var moduleC:IModuleManager;
+			
+						[Bindable]
+						[Inject(id="lazyLoadPolicy")]
+						public var lazyLoadPolicy:ILoadPolicy;
+						
+			[MessageDispatcher]
+			public var dispatcher:Function;
+			
+			[Bindable]
+			public var moduleCount:int=0;
+			
+			protected function dispatchPongMessage():void
+			{
+				dispatcher(new PongMessage());
+			}
+			
+			
+			protected function dispatchBroadcastMessage():void
+			{
+				dispatcher(new BroadCastMessage());
+			}
+			
+			
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Canvas width="100%" height="100%" id="bc">
+	
+		<mx:Canvas  width="637" height="277">
+			<module:ModuleViewLoader id="test1" moduleManager="{moduleA}" moduleId="moduleAA" 
+									 skinClass="com.adobe.cairngorm.module.ModuleViewLoaderSkin" width="232" height="114" y="169" x="371">
+				<module:loadPolicy>
+					<module:BasicLoadPolicy />
+				</module:loadPolicy>
+			</module:ModuleViewLoader>
+			<module:ModuleViewLoader moduleManager="{moduleC}" moduleId="ma4" 
+									 skinClass="com.adobe.cairngorm.module.ModuleViewLoaderSkin" width="167" height="110" x="69" y="157">
+				<module:loadPolicy>
+					<module:BasicLoadPolicy />
+				</module:loadPolicy>
+			</module:ModuleViewLoader>
+			<module:ModuleViewLoader moduleManager="{moduleC}" moduleId="ma3" 
+									 skinClass="com.adobe.cairngorm.module.ModuleViewLoaderSkin" width="182" height="118" x="383" y="31">
+				<module:loadPolicy>
+					<module:BasicLoadPolicy />
+				</module:loadPolicy>
+			</module:ModuleViewLoader>
+			<module:ModuleViewLoader moduleManager="{moduleA}" moduleId="moduleA2" 
+									 skinClass="com.adobe.cairngorm.module.ModuleViewLoaderSkin" width="167" height="117" x="69" y="52">
+				<module:loadPolicy>
+					<module:BasicLoadPolicy />
+				</module:loadPolicy>
+			</module:ModuleViewLoader>
+		</mx:Canvas>
+		
+		<mx:Canvas>
+		</mx:Canvas>
+		
+		<mx:Canvas>
+		</mx:Canvas>
+		
+		<mx:Canvas>
+		</mx:Canvas>
+		
+	
+		
+		
+		<!--		<mx:Button 
+			label="给moduleA 发送ping"
+			click="dispatchPingMessage('moduleA')" x="532" y="291"/>  -->
+	<mx:HBox width="100%">
+		<mx:Button 
+			label="给所有moduleA发送broad"
+			click="dispatchBroadcastMessage()" x="24" y="285"/>
+		
+		<mx:Button    
+			label="发送log信息"
+			click="dispatcher( new ClearLogMessage() )" x="233" y="286"/>
+		
+		<!--	<mx:Label text="{moduleA==null?'为空':'不为空'}"  x="50" y="347"/>  -->
+		<mx:Button 
+			label="发送pong信息"
+			click="dispatchPongMessage()"  x="342" y="288"/>
+		<mx:Button 
+			label="给moduleA1发送ping"
+			click="dispatcher(new PingMessage('moduleAA'))"  x="459" y="288"/>
+	</mx:HBox>
+		<mx:HBox>
+			<mx:HBox width="100%">
+			</mx:HBox>
+		</mx:HBox>
+		<mx:Button 
+			label="remove 'moduleA' loadPolicy from loader"
+			click="test1.loadPolicy=null" x="1" y="290"/>
+		<mx:Button 
+			label="adding 'moduleA' LazyModuleLoadPolicy to loader"
+			click="{test1.loadPolicy=lazyLoadPolicy}" x="249" y="290"/>
+		<mx:Button 
+			label="adding 'moduleA' BasicLoadPolicy to loader"
+			click="test1.loadPolicy=new BasicLoadPolicy()" x="9" y="323"/>
+		
+	</mx:Canvas>
+	
+	
+	
+	
+		
+		<spicefactory:ContextBuilder>
+			<cairngorm:CairngormModuleSupport/>
+			 <spicefactory:FlexConfig type="{ mainContext }"/>
+		</spicefactory:ContextBuilder>
+		
+		<spicefactory:Configure />
+</mx:Application>

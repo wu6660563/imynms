@@ -1,0 +1,231 @@
+/**
+ * ClassName: topology.js
+ * <p>用于展现拓扑图
+ * 
+ * @author      聂林
+ * @version     v1.01
+ * @since       v1.01
+ * @Date        2012-7-4 上午11:54:57
+ */
+(function($) {
+    $.fn.show = function(url) {
+        $.ajax({
+            type : "POST",
+            url : url,
+            dataType : "xml",
+            success : function (data) {
+                new Topology();
+            }
+        });
+    };
+})(jQuery);
+
+function TopologyMapNode() {
+
+    // id
+    this.id = null;
+
+    // 类型
+    this.nodeType = null;
+
+    // 图片
+    this.imgValue = null;
+
+    // X 位置
+    this.x = 0;
+
+    // Y 位置
+    this.y = 0;
+
+    // IP
+    this.ip = null;
+
+    // 别名
+    this.alias = null;
+
+    // 设备信息
+    this.info = null;
+
+    // 设备右键菜单
+    this.menu = null;
+
+    // 设备关联子图
+    this.relationMap = null;
+    
+    // 设备图片对象
+    this.imageElement = null;
+    
+    // 设备文本对象
+    this.divTextElement = null;
+
+    // 设备信息对象
+    this.divInfoElement = null;
+
+    // 设备别名上下空白
+    this.aliasHSpace = 0;
+    
+    // 设备别名左右空白
+    this.aliasVSpace = 0;
+    
+    // 是否被选中
+    this.isSelected = false;
+    
+    // 设备移动之前的 X 位置
+    this.beforeMoveX = 0;
+
+    // 设备移动之前的 Y 位置
+    this.beforeMoveY = 0;
+    
+    // 设备被鼠标按住状态
+    this.mouseDownStatus = false;
+};
+
+Topology = function(xmldoc) {
+ 
+    return this.init(xmldoc);
+};
+
+Topology.prototype = {
+    
+    // 拓扑图的 XML 文件
+    xmlName : null,
+
+    // 拓扑图的 XML 对象
+    xmldoc : null,
+    
+    // 拓扑图最大宽度
+    maxWidth : 0,
+    
+    // 拓扑图最大高度
+    maxHeight : 0,
+    
+    // 拓扑图最小高度
+    minWidth : 0,
+    
+    // 拓扑图最小高度
+    minHeight : 0,
+    
+    // 拓扑图 XML 设备节点数据
+    nodes : null,
+    
+    // 拓扑图 XML 设备链路数据
+    lines : null,
+    
+    // 拓扑图 XML 设备双链路数据
+    assistantlines : null,
+    
+    // 拓扑图 XML 设备示意数据
+    demoLines : null,
+    
+    // 拓扑图设备节点对象数组
+    topologyMapNodes : new Array(),
+    
+    // 拓扑图设备链路对象数组
+    topologyMapLines : new Array(),
+
+    // 拓扑图双链路对象数组
+    topologyMapAssistantLines : new Array(),
+    
+    // 拓扑图示意链路对象数组
+    topologyMapDemoLines : new Array(),
+    
+    // 拓扑图设备节点数组用于更新
+    nodeobjArray : new Array(),
+    
+    // 拓扑图链路节点数组用于更新
+    linkobjArray : new Array(),
+    
+    // 设备信息对象
+    divInfoElement : null,
+    
+    // 设备菜单对象
+    divMenuElement : null,
+    
+    // 选中的设备数组中
+    selectedTopologyMapNodes : new Array(),
+    
+    // 鼠标初始位置 X 用于计算移动
+    mouseOriX : null,
+    
+    // 鼠标初始位置 Y 用于计算移动
+    mouseOriY : null,
+    
+    // 画框选择时，用的上下左右四根彩线
+    imgTop : document.getElementById("imgTop"),
+
+    // 画框选择时，用的上下左右四根彩线
+    imgLeft : document.getElementById("imgLeft"),
+
+    // 画框选择时，用的上下左右四根彩线
+    imgBottom : document.getElementById("imgBottom"),
+
+    // 画框选择时，用的上下左右四根彩线
+    imgRight : document.getElementById("imgRight"),
+
+    // 拓扑图展现的 DIV
+    divLayer : document.getElementById("divLayer"),
+
+    // 拓扑图操作权限
+    topologyMapOperation : new TopologyMapOperation(),
+    
+    init : function(xmldoc) {
+        this.xmldoc = xmldoc;
+    },
+
+    show : function () {
+        
+    },
+
+    parseData: function() {
+        // 分析nodes节点
+        this.nodes = this.xmldoc.getElementsByTagName("node");
+        var nodeNum = this.nodes.length;
+        var i = 0;
+        while (i < nodeNum) {
+            var node = this.nodes[i];
+            var topologyMapNode = this.createTopologyMapNode(node);
+            this.topologyMapNodes.push(topologyMapNode);
+            this.addTopologyMapNode(topologyMapNode);
+            this.nodeobjArray.push(new nodeobj(topologyMapNode.imageElement.id,topologyMapNode.imageElement.src,topologyMapNode.nodeType,fatherXML));
+            i++;
+        }
+        // 分析lines节点
+        this.lines = this.xmldoc.getElementsByTagName("line");
+        var lineNum = this.lines.length;
+        var j = 0;
+        while (j < lineNum) {
+            var lineObj = this.lines[j];
+            var topologyMapLine = this.createTopologyMapLine(lineObj);
+            this.topologyMapLines.push(topologyMapLine);
+            this.addTopologyMapLine(topologyMapLine);
+            this.linkobjArray.push(new linkobj(topologyMapLine.id,topologyMapLine.lineid,topologyMapLine.color,fatherXML,"line"));
+            j++;
+        }
+        
+        // 分析Assistantlines节点
+        this.assistantlines = this.xmldoc.getElementsByTagName("assistant_line");
+        var assistantlineNum = this.assistantlines.length;
+        var k = 0;
+        while (k < assistantlineNum) {
+            var line = this.assistantlines[k];
+            var topologyMapAssistantLine = this.createTopologyMapAssistantLine(line);
+            this.topologyMapAssistantLines.push(topologyMapAssistantLine);
+            this.addTopologyMapAssistantLine(topologyMapAssistantLine);
+            this.linkobjArray.push(new linkobj(topologyMapAssistantLine.id,topologyMapAssistantLine.lineid,topologyMapAssistantLine.color,fatherXML,"assistant"));
+            k++;
+        }
+        
+        // 分析demoLines节点
+        this.demoLines = this.xmldoc.getElementsByTagName("demoLine");
+        var demolineNum = this.demoLines.length;
+        var m = 0;
+        while (m < demolineNum) {
+            var line = this.demoLines[m];
+            var topologyMapDemoLine = this.createTopologyMapDemoLine(line);
+            this.topologyMapDemoLines.push(topologyMapDemoLine);
+            this.addTopologyMapDemoLine(topologyMapDemoLine);
+            this.linkobjArray.push(new linkobj(topologyMapDemoLine.id,topologyMapDemoLine.lineid,topologyMapDemoLine.color,fatherXML,"demo"));
+            m++;
+        }
+    }
+};

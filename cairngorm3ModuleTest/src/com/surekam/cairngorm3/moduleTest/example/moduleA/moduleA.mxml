@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module  xmlns:mx="http://www.adobe.com/2006/mxml"
+		   implements="com.adobe.cairngorm.module.IParsleyModule"
+		   layout="absolute" width="100" height="100" 
+		   xmlns:spicefactory="http://www.spicefactory.org/parsley" 
+		   xmlns:cairngorm="com.adobe.cairngorm.*">
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.cairngorm.module.IParsleyModule;
+			
+			import org.spicefactory.parsley.core.context.Context;
+			import org.spicefactory.parsley.flex.tag.builder.ContextBuilderTag;
+			
+			[Bindable]
+			[Inject]
+			public var pm:ModuleAPM;
+			
+			public function get contextBuilder():ContextBuilderTag
+			{
+				return contextBuilderTag;
+			}
+		]]>
+	</mx:Script>
+	
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		
+		<spicefactory:Configure />
+		<spicefactory:ContextBuilder id="contextBuilderTag" config="{moduleAContext}" />
+	
+	    <mx:TextArea text="{pm.data}"   x="5" y="25" width="92" height="73"/>
+	    <mx:Text text="数据"  x="6" y="6" height="17"/>
+</mx:Module>

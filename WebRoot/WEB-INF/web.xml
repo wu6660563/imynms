@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+    http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <welcome-file-list>
+        <welcome-file>login.jsp</welcome-file>
+    </welcome-file-list>
+    <filter>
+        <filter-name>mainFilter</filter-name>
+        <filter-class>com.mynms.filter.MainFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>mainFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>
+            org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>struts-default.xml,struts-plugin.xml,../config/struts/struts.xml</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>WEB-INF/config/spring/applicationContext.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.mynms.core.initialize.InitializeListener</listener-class>
+    </listener>
+    <!-- Http Flex Session attribute and binding listener support -->
+    <listener>
+        <listener-class>flex.messaging.HttpFlexSession</listener-class>
+    </listener>
+    <!-- MessageBroker Servlet -->
+    <display-name>MessageBrokerServlet</display-name>
+    <servlet>
+        <servlet-name>MessageBrokerServlet</servlet-name>
+        <servlet-class>flex.messaging.MessageBrokerServlet</servlet-class>
+        <init-param>
+            <param-name>services.configuration.file</param-name>
+            <param-value>/WEB-INF/flex/services-config.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MessageBrokerServlet</servlet-name>
+        <url-pattern>/messagebroker/*</url-pattern>
+    </servlet-mapping>
+    <display-name>RDSDispatchServlet</display-name>
+    <servlet>
+        <servlet-name>RDSDispatchServlet</servlet-name>
+        <servlet-class>flex.rds.server.servlet.FrontEndServlet</servlet-class>
+        <init-param>
+            <param-name>useAppserverSecurity</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>10</load-on-startup>
+    </servlet>
+    <servlet-mapping id="RDS_DISPATCH_MAPPING">
+        <servlet-name>RDSDispatchServlet</servlet-name>
+        <url-pattern>/CFIDE/main/ide.cfm</url-pattern>
+    </servlet-mapping>
+    
+     <!-- The front controller of this Spring Web application, responsible for handling all application requests --> 
+    <servlet>  
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>  
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+        <init-param>  
+            <param-name>contextConfigLocation</param-name>  
+            <param-value>/WEB-INF/config/spring/applicationContext-system-flex.xml</param-value>  
+        </init-param>  
+        <load-on-startup>1</load-on-startup>  
+    </servlet> 
+    <!-- Map /spring/* requests to the DispatcherServlet -->
+    <servlet-mapping>
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
+        <url-pattern>/spring/*</url-pattern>
+    </servlet-mapping>
+</web-app>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="/performanceNetInfo" namespace="/performanceNetInfo" extends="struts-default">
+        <action name="list" class="performanceNetAction" method="list">
+            <result name="list">/performance/net/list.jsp</result>
+        </action>
+        <action name="findById" class="performanceNetAction" method="findById">
+            <result name="list">/performance/net/list.jsp</result>
+        </action>
+    </package>
+    <package name="/performanceHostInfo" namespace="/performanceHostInfo" extends="struts-default">
+        <action name="list" class="performanceHostAction" method="list">
+            <result name="list">/performance/host/list.jsp</result>
+        </action>
+    </package>
+    <package name="/performanceDBInfo" namespace="/performanceDBInfo" extends="struts-default">
+        <action name="list" class="performanceDBAction" method="list">
+            <result name="list">/performance/DB/list.jsp</result>
+        </action>
+    </package>
+    <package name="/performanceEnvInfo" namespace="/performanceEnvInfo" extends="struts-default">
+        <action name="list" class="performanceEnvAction" method="list">
+            <result name="list">/performance/env/list.jsp</result>
+        </action>
+    </package>
+</struts>

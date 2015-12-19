@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Object xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:spicefactory="http://www.spicefactory.org/parsley">
+	
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		
+		<spicefactory:Object type="{ModuleAPM}" />
+	
+	
+	
+</mx:Object>

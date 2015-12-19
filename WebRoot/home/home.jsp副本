@@ -1,0 +1,57 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+<html xmlns:v="urn:schemas-microsoft-com:vml">
+    <head>
+        <base href="<%=basePath%>">
+        <title>首页</title>
+    	<meta http-equiv="pragma" content="no-cache">
+    	<meta http-equiv="cache-control" content="no-cache">
+    	<meta http-equiv="expires" content="0">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="<%=path%>/resource/js/jquery/jquery.mobile-1.1.0/jquery.mobile-1.1.0.min.css" />
+        <script src="<%=path%>/resource/js/jquery/jquery-1.7.2.min.js"></script>
+        <script src="<%=path%>/resource/js/jquery/jquery.mobile-1.1.0/jquery.mobile-1.1.0.min.js"></script>
+        <script src="<%=path%>/resource/js/common/util/scrollPagination.js"></script>
+        <link type="text/css" href="css/themename/jquery-ui-1.8.21.custom.css" rel="Stylesheet" />  
+        <script type="text/javascript" src="js/jquery-ui-1.8.21.custom.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="<%=path%>/resource/css/global/global.css">
+        <script src="<%=path%>/resource/js/home/home.js"></script>
+        
+        <style>
+            v\:*{ behavior:url(#default#VML); }
+        </style>
+    </head>
+
+    <body>
+        <div id="page" data-role="page" style="height: 100%">
+            <form name="mainForm" method="post" id="mainForm">
+                <div style="padding: 15px;" data-role="content">
+                    <ul data-role="listview" data-inset="true">
+                        <li data-role="list-divider" class="list-divider">功能列表</li>
+                        <li >
+                            <a id="topologyMap" href="<%=path%>/topologyMap/list.do" data-ajax="true">网络拓扑</a>
+                        </li>
+                        <li >
+                            <a id="performanceNetInfo" href="<%=path%>/performanceNetInfo/list.do" data-ajax="true">网络设备性能信息</a>
+                        </li>
+                        <li >
+                            <a id="performanceHostInfo" href="<%=path%>/performanceHostInfo/list.do" data-ajax="true">服务器性能信息</a>
+                        </li>
+                        <li >
+                            <a id="performanceDBInfo" href="<%=path%>/performanceDBInfo/list.do" data-ajax="true">数据库性能信息</a>
+                        </li>
+                        <li >
+                            <a id="alarmInfo"  href="<%=path%>/alarmInfo/list.do" data-ajax="true">告警信息</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
